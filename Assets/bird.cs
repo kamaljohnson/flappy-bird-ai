@@ -11,16 +11,24 @@ public class bird : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
-        
-        Move();
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(isPlaying)
         {
-            Flap();
+            Move();
+            
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                Flap();
+            }
+        
+        } else
+        {
+            Stop();
         }
+
     }
 
     void Move()
