@@ -29,7 +29,6 @@ public class Bird : MonoBehaviour
                 Stop();
                 break;
             case birdStates.Flying:
-                print("Here");
                 Move();
                 if(Input.GetKeyDown(KeyCode.Space))
                 {
@@ -64,7 +63,6 @@ public class Bird : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collided");
         if(collision.collider.tag == "Pipe")
         {
             state = birdStates.Hit;
