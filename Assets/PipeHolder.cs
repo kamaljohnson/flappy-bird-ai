@@ -5,9 +5,14 @@ public class PipeHolder : MonoBehaviour
     public float distance = 0;
     public float speed = 10;
 
+    public Bird bird;
+
     private void Update()
     {
-        Move();
+        if(bird.state == birdStates.Flying)
+        {
+            Move();
+        }
     }
 
     void Move()

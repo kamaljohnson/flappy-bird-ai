@@ -1,8 +1,16 @@
 ﻿using UnityEngine;
 
-public class bird : MonoBehaviour
+public static class birdStates
 {
-    public bool isPlaying;
+    public const int Idle = 0;
+    public const int Flying = 1;
+    public const int Hit = 2;
+    public const int Dead = 3;
+}
+
+public class Bird : MonoBehaviour
+{
+    public int state = birdStates.Flying;
     
     public float flapForce;
 
@@ -15,18 +23,25 @@ public class bird : MonoBehaviour
 
     void Update()
     {
-        if(isPlaying)
+        switch(state)
         {
-            Move();
-            
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                Flap();
-            }
-        
-        } else
-        {
-            Stop();
+            case birdStates.Idle:
+                Stop();
+                break;
+            case birdStates.Flying:
+                print("Here");
+                Move();
+                if(Input.GetKeyDown(KeyCode.Space))
+                {
+                    Flap();
+                }
+                break;
+            case birdStates.Hit:
+                Move();
+                break;
+            case birdStates.Dead:
+                Stop();
+                break;
         }
 
     }
@@ -44,5 +59,15 @@ public class bird : MonoBehaviour
     void Flap()
     {
         rb.velocity = Vector2.up * flapForce;
-    }    
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collided");
+        if(collision.collider.tag == "Pipe")
+        {
+            state = birdStates.Hit;
+        }
+    }
 }
